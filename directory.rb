@@ -61,7 +61,7 @@ directory_form.set_fields(:department => options[:department])
 page = agent.submit(directory_form, directory_form.buttons.first)
 doc = page.parser
 
-numPeopleStr = doc.xpath("//div[@id='blank']/div[1]").text
+numPeopleStr = doc.xpath("//div[@id='content']/div[1]").text
 
 if numPeopleStr.include? QUERY_LIMIT_EXCEEDED
 	abort(QUERY_LIMIT_EXCEEDED)
@@ -72,7 +72,7 @@ else
 end
 
 i = 0
-doc.xpath("//div[@id='blank']/table[1]/tr").each{ |x|
+doc.xpath("//div[@id='content']/table[1]/tr").each{ |x|
 	i += 1
 	if i != 1 && i!=numPeople+2
 		puts "#{$i}========================="
@@ -95,7 +95,7 @@ doc.xpath("//div[@id='blank']/table[1]/tr").each{ |x|
 		elsif options[:advanced]
 			page = agent.get(url)
 			doc = page.parser
-			data = doc.xpath("//div[@id='blank']/div[2]/table[1]/tr[2]/td[1]/table[1]/tr")
+			data = doc.xpath("//div[@id='content']/div[2]/table[1]/tr[2]/td[1]/table[1]/tr")
 
 			person = Hash.new()
 			(1..10).each { |y|
